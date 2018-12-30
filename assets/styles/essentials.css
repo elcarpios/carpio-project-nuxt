@@ -1,0 +1,19 @@
+html, body, ul, li, h1, h5, p {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+body {
+	height: 100vh;
+	width: 100%;
+}
+
+a, :focus, :hover, ::selection {
+	text-decoration: none;
+	color: inherit;
+	background: transparent;
+	outline: 0;
+	-webkit-tap-highlight-color: transparent;
+}
