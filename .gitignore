@@ -79,3 +79,6 @@ dist
 
 # IDE
 .idea
+
+# Distribution files
+dist

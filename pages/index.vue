@@ -1,6 +1,6 @@
 <template>
     <span>
-        <nuxt-child/>
+        <nuxt/>
         <ArticleMosaic :key="post._id" v-for="post of posts" :post="post"/>
     </span>
 </template>
@@ -13,34 +13,29 @@ export default {
   components: { ArticleMosaic },
   props: {},
   data() {
-      return {
-        posts: null,
-        loading: true,
-        errored: false
-      }
+    return {}
+  },
+  fetch({ store }) {
+    return store.dispatch("fetchAllPosts");
+  },
+  computed: {
+    posts () {
+      return this.$store.state.posts;
+    }
   },
   mounted() {
     if(this.debugger) {
-        return;
+      return;
     }
-
-    fetch('https://crp-api.herokuapp.com/api')
-      .then(response => response.json())
-      .then(response => (this.posts = response))
-      .catch(error => {
-        console.log(error)
-        this.errored = true
-      })
-      .finally(() => this.loading = false);
   }
 }
 </script>
 
 <style scoped>
 span {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
-    padding: 10px 0px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  padding: 10px 0px;
 }
 </style>

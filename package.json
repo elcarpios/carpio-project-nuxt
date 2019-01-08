@@ -1,7 +1,7 @@
 {
-  "name": "carpio-test",
+  "name": "carpio-project",
   "version": "1.0.0",
-  "description": "My impeccable Nuxt.js project",
+  "description": "",
   "author": "elcarpios",
   "private": true,
   "scripts": {
@@ -10,7 +10,13 @@
     "start": "nuxt start",
     "generate": "nuxt generate"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elcarpios"
+  },
   "dependencies": {
+    "@nuxtjs/axios": "^5.3.6",
+    "axios": "^0.18.0",
     "cross-env": "^5.2.0",
     "nuxt": "^2.0.0"
   },

@@ -5,61 +5,54 @@
         </nuxt-link>
         <img
         class="details-media"
-        :src="post.media || articleDetails.media"
+        :src="post.media"
         >
         <div class="details-content">
             <div class="metadetails">
-                <span class="details-author">{{ post.author || articleDetails.author }}</span>
-                <time class="details-date" :datetime="post.date || articleDetails.date">
-                    {{ new Date(post.date || articleDetails.date).toLocaleString('es-ES',{ year: 'numeric', month: 'long', day: 'numeric' }) }}
+                <span class="details-author">{{ post.author }}</span>
+                <time class="details-date" :datetime="post.date">
+                    {{ new Date(post.date).toLocaleString('es-ES',{ year: 'numeric', month: 'long', day: 'numeric' }) }}
                 </time>
             </div>
-            <div v-html="post.title || articleDetails.title" class="details-title"></div>
-            <div v-html="post.excerpt || articleDetails.excerpt" class="details-excerpt"></div>
+            <div v-html="post.title" class="details-title"/>
+            <ul class="details-categories">
+              <li> {{ post.subtitle }}</li>
+            </ul>
+            <div v-html="post.excerpt" class="details-excerpt"/>
+            <ul v-if="post.categories && post.categories.length > 0" class="details-categories">
+              <li :key="index"  v-for="(category, index) in post.categories"> {{ category }}</li>
+            </ul>
         </div>
+        <Footer/>
     </article>
 </template>
 
 <script>
-const getPostIdFromUrl = () => {
-    const pathName = window.location.pathname.split('/');
-
-    return pathName[pathName.length - 1];
-};
+import Footer from "@/components/footer/";
 
 export default {
   name: 'articleDetails',
-  components: {},
+  components: { Footer },
   props: {
-      post: {
-          default: () => ({}),
-          type: Object
-      },
       debugger: Boolean
   },
   data() {
-      return {
-        articleDetails: {},
-        loading: true,
-        errored: false
-      }
+      return {}
   },
-  mounted() {
-    if(this.debugger) {
-        return;
+  fetch({ store, route, params }) {
+    const getPostIdFromUrl = () => {
+      const pathName = route.path.split('/');
+
+      return pathName[pathName.length - 1];
+    };
+
+    const postId = params.id || getPostIdFromUrl();
+    return store.dispatch("fetchPost", postId);
+  },
+  computed: {
+    post () {
+      return this.$store.state.singlePost;
     }
-
-    const postId = this.post._id || getPostIdFromUrl(),
-        headers = { deeplinking: !this.post._id };
-
-    fetch('https://crp-api.herokuapp.com/api/posts/' + postId, { headers })
-      .then(response => response.json())
-      .then(response => (this.articleDetails = response[0]))
-      .catch(error => {
-        console.log(error)
-        this.errored = true
-      })
-      .finally(() => this.loading = false);
   },
   methods: {}
 };
@@ -85,17 +78,19 @@ article {
 
 div.details-content {
     padding: 5px 10px;
+    margin-bottom: 15px;
 }
 
 div.metadetails {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 4px 0px 10px;
+    padding-top: 4px;
+    margin-bottom: 15px;
 }
 
 span.details-author {
-    font-size: 14px;
+    font-size: 16px;
     padding-left: 5px;
     border-left: 3px solid red;
     margin-left: 2px;
@@ -103,7 +98,7 @@ span.details-author {
 }
 
 time.details-date {
-    font-size: 12px;
+    font-size: 14px;
     margin-right: 1px;
     font-weight: bolder;
 }
@@ -122,7 +117,35 @@ img.details-media {
     letter-spacing: 1px;
 }
 
+.details-categories li {
+  display: inline-block;
+  margin-right: 15px;
+  background-color: #4dc0b5;
+  color: white;
+  padding: 4px 6px;
+}
+
 .details-excerpt {
-    line-height: 1.445;
+    margin: 15px 0px;
+    line-height: 1.58;
+    letter-spacing: -.004em;
+    font-size: 18px;
+}
+
+.details-footer {
+  margin-top: 15px;
+}
+
+</style>
+
+<style>
+p {
+  margin-top: 14px;
+  text-align: justify;
+}
+img.img-responsive {
+  width: 100%;
+  height: 100%;
+  margin-top: 15px;
 }
 </style>
