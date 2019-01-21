@@ -1,6 +1,5 @@
 <template>
     <span>
-        <nuxt/>
         <ArticleMosaic :key="post._id" v-for="post of posts" :post="post"/>
     </span>
 </template>
@@ -15,8 +14,12 @@ export default {
   data() {
     return {}
   },
-  fetch({ store }) {
-    return store.dispatch("fetchAllPosts");
+  asyncData({ payload, store }) {
+    if (payload) {
+       return store.commit('setPosts', payload);
+    }
+
+    return store.state.posts;
   },
   computed: {
     posts () {

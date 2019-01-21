@@ -1,11 +1,15 @@
 <template>
+  <span class="article-wrapper">
     <article class="article-details">
-        <nuxt-link class="go-back" :to="{ name: 'index' }">
+        <a v-if="isDeeplinking" class="go-back" target="_self" href="/">
+            <span>X</span>
+        </a>
+        <nuxt-link v-if="!isDeeplinking" class="go-back" :to="{ path: '/' }">
             <span>X</span>
         </nuxt-link>
         <img
         class="details-media"
-        :src="post.media"
+        :src="`/_nuxt/static/images/${post.media}`"
         >
         <div class="details-content">
             <div class="metadetails">
@@ -15,16 +19,14 @@
                 </time>
             </div>
             <div v-html="post.title" class="details-title"/>
-            <ul class="details-categories">
-              <li> {{ post.subtitle }}</li>
+            <ul class="details-categories" v-if="post.categories">
+              <li :key="index" v-for="(category, index) in post.categories"> {{ category }}</li>
             </ul>
             <div v-html="post.excerpt" class="details-excerpt"/>
-            <ul v-if="post.categories && post.categories.length > 0" class="details-categories">
-              <li :key="index"  v-for="(category, index) in post.categories"> {{ category }}</li>
-            </ul>
         </div>
-        <Footer/>
     </article>
+    <Footer/>
+  <span>
 </template>
 
 <script>
@@ -37,21 +39,25 @@ export default {
       debugger: Boolean
   },
   data() {
-      return {}
+      return {
+
+      }
   },
-  fetch({ store, route, params }) {
-    const getPostIdFromUrl = () => {
-      const pathName = route.path.split('/');
+  asyncData({ store, route, params, payload }) {
+    if (payload) {
+      return store.commit('setPost', payload);
+    }
 
-      return pathName[pathName.length - 1];
-    };
+    const post = store.state.posts.filter(post => post._id === params.id)[0];
 
-    const postId = params.id || getPostIdFromUrl();
-    return store.dispatch("fetchPost", postId);
+    return post ? store.commit('setPost', post) : {};
   },
   computed: {
-    post () {
+    post() {
       return this.$store.state.singlePost;
+    },
+    isDeeplinking() {
+      return this.$store.state.posts.length === 0;
     }
   },
   methods: {}
@@ -59,13 +65,19 @@ export default {
 </script>
 
 <style scoped>
+span.article-wrapper {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-around;
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
 article {
-    position: absolute;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    padding: 0 2%;
     background-color: white;
+    flex-grow: 1;
 }
 
 .go-back {
@@ -134,6 +146,10 @@ img.details-media {
 
 .details-footer {
   margin-top: 15px;
+}
+
+Footer {
+  flex-shrink: 0;
 }
 
 </style>

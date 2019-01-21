@@ -6,14 +6,14 @@
         {{ new Date(post.date).toLocaleString('es-ES',{ year: 'numeric', month: 'long', day: 'numeric' }) }}
       </time>
     </div>
-    <nuxt-link :to="{ name: 'index-post-id', params: { id: post._id, post } }">
+    <nuxt-link :to="{ path: `/post/${post._id}/`, params: { id: post._id, post } }">
       <div
       class ="img"
-      :style="'background-image: url(' + post.media + ');'">
+      :style="`background-image: url(\'/_nuxt/static/images/${post.media}\');`">
       </div>
     </nuxt-link>
     <div class="mosaic-subtitle">{{ post.subtitle }}</div>
-    <nuxt-link :to="{ name: 'index-post-id', params: { id: post._id, post } }">
+    <nuxt-link :to="{ path: `post/${post._id}`, params: { id: post._id, post } }">
       <p class="mosaic-title">{{ post.title }}</p>
     </nuxt-link>
   </article>

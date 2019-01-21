@@ -4,7 +4,7 @@
 				<div>findMe</div>
 			</li>
 			<li>
-				<nuxt-link :to="{ name: 'index' }">
+				<nuxt-link :to="{ path: '/' }">
 					<h3>Home</h3>
 				</nuxt-link>
 			</li>

@@ -23,7 +23,7 @@ footer {
 	height: 36px;
 	width: 100%;
 	text-align: center;
-	font-size: 12px;
+  font-size: 12px;
 }
 
 span {
