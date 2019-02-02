@@ -19,8 +19,9 @@ module.exports = {
     routes: function () {
       return axios.get('https://crp-api.herokuapp.com/api')
         .then(posts => [{ route: '/', payload: posts.data }].concat(posts.data.map(post => ({ route: `/post/${post._id}`, payload: post }))))
-        .catch(error => console.log(error))
-      }
+        .catch(error => console.log(error));
+    },
+    fallback: true
   },
 
   /*

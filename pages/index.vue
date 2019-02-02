@@ -1,6 +1,8 @@
 <template>
     <span>
-        <ArticleMosaic :key="post._id" v-for="post of posts" :post="post"/>
+        <transition-group>
+          <ArticleMosaic :key="post._id" v-for="post of posts" :post="post"/>
+        </transition-group>
     </span>
 </template>
 

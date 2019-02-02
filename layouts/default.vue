@@ -1,19 +1,19 @@
 <template>
   <div id="app">
     <Header/>
-    	<nuxt/>
+    	<Nuxt keep-alive/>
     <Footer/>
   </div>
 </template>
 
 <script>
 import Header from "@/components/header/";
-import Main from "@/components/main/";
 import Footer from "@/components/footer/";
 
 export default {
   name: 'App',
-  components: { Header, Main, Footer }
+  scrollToTop: false,
+  components: { Header, Footer }
 };
 </script>
 
@@ -29,9 +29,9 @@ Header, Footer {
 	flex-shrink: 0;
 }
 
-Main {
+Nuxt {
 	flex-grow: 1;
-    overflow: auto;
-    min-height: 2em;
+  overflow: auto;
+  min-height: 2em;
 }
 </style>

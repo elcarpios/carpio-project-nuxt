@@ -4,9 +4,9 @@
         <a v-if="isDeeplinking" class="go-back" target="_self" href="/">
             <span>X</span>
         </a>
-        <nuxt-link v-if="!isDeeplinking" class="go-back" :to="{ path: '/' }">
+        <a v-if="!isDeeplinking" class="go-back" @click="$router.go(-1)">
             <span>X</span>
-        </nuxt-link>
+        </a>
         <img
         class="details-media"
         :src="`/_nuxt/static/images/${post.media}`"
