@@ -69,6 +69,9 @@ module.exports = {
         sources: glob.sync('./assets/images/*.{jpg,jpeg,png}'),
         destination: './assets/',
       }
+    }],
+    ['@nuxtjs/google-analytics', {
+      id: 'UA-133657354-1'
     }]
   ],
 

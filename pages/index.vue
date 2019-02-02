@@ -42,5 +42,6 @@ span {
   flex-flow: row wrap;
   justify-content: space-around;
   padding: 10px 0px;
+  flex-grow: 1;
 }
 </style>

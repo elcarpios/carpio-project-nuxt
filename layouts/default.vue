@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header/>
-    	<Nuxt keep-alive/>
+      <Nuxt keep-alive/>
     <Footer/>
   </div>
 </template>
@@ -19,19 +19,15 @@ export default {
 
 <style scoped>
 #app {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-	width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 100vw;
+  height: 100%;
+  width: 100%;
 }
 
 Header, Footer {
-	flex-shrink: 0;
-}
-
-Nuxt {
-	flex-grow: 1;
-  overflow: auto;
-  min-height: 2em;
+  flex-shrink: 0;
 }
 </style>
